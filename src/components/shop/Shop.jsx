@@ -22,20 +22,19 @@ function Shop() {
     fetch("https://fakestoreapi.com/products/categories")
       .then((res) => res.json())
       .then((json) => setCategories(json))
-      .catch((error) => setError(error))
-      .finally(setLoading(false));
+      .catch((error) => setError(error));
   }, []);
 
   useEffect(() => {
     if (!filterCategory) {
       fetch("https://fakestoreapi.com/products")
-        .then((res) => res.json())
+        .then(async (res) => await res.json())
         .then((json) => setData(json))
         .catch((error) => setError(error))
         .finally(setLoading(false));
     } else {
       fetch(`https://fakestoreapi.com/products/category/${filterCategory}`)
-        .then((res) => res.json())
+        .then(async (res) => await res.json())
         .then((json) => setData(json))
         .catch((error) => setError(error))
         .finally(setLoading(false));

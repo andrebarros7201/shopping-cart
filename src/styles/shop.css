@@ -11,10 +11,11 @@ body {
 main {
     display: flex;
     flex-direction: column;
+    flex: 3;
 }
 
 .shop-main {
-    flex: 3;
+
     display: flex;
     flex-flow: row wrap;
     gap: 3rem;
@@ -65,8 +66,17 @@ button:hover {
     height: 100%;
 }
 
-.shop-sidebar {
-    flex: 1;
-    background-color: var(--background-color);
-    min-width: 300px;
+.categories > ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.categories > ul > li > button {
+    background-color: var(--white-color);
+    border: none;
+    font-size: 1rem;
+    font-weight: bolder;
 }
