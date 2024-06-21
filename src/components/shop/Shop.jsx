@@ -1,22 +1,24 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "../../styles/shop.css";
-
-function ShopItem({ item }) {
-  return (
-    <div className="shop-item">
-      <h2>{item.title}</h2>
-      <p>Price: {item.price}€</p>
-      <p>{item.category}</p>
-    </div>
-  );
-}
+import ShopSidebar from "./ShopSidebar.jsx";
+import Cart from "./Cart.jsx";
+import ShopItem from "./ShopItem.jsx";
 
 function Shop() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [shoppingCart, setShoppingCart] = useState([]);
+
+  useEffect(() => {
+    fetch("https://fakestoreapi.com/products/categories")
+      .then((res) => res.json())
+      .then((json) => setCategories(json))
+      .catch((error) => setError(error))
+      .finally(setLoading(false));
+  }, []);
 
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
@@ -30,9 +32,13 @@ function Shop() {
   if (error) return <h1>Something went wrong...</h1>;
   return (
     <div className="shop">
-      {data.map((item) => (
-        <ShopItem key={item.id} item={item} />
-      ))}
+      <ShopSidebar categories={categories} />
+      <div className="shop-main">
+        {data.map((item) => (
+          <ShopItem key={item.id} item={item} />
+        ))}
+      </div>
+      <Cart />
     </div>
   );
 }
