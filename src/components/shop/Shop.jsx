@@ -28,6 +28,13 @@ function Shop() {
       .finally(setLoading(false));
   }, []);
 
+  const addItemToCart = (item, quantity) => {
+    setShoppingCart((prev) => [
+      ...prev,
+      { name: item.title, price: item.price, quantity: quantity },
+    ]);
+  };
+
   if (loading) return <h1>Loading...</h1>;
   if (error) return <h1>Something went wrong...</h1>;
   return (
@@ -35,7 +42,7 @@ function Shop() {
       <ShopSidebar categories={categories} />
       <div className="shop-main">
         {data.map((item) => (
-          <ShopItem key={item.id} item={item} />
+          <ShopItem key={item.id} item={item} addItemToCart={addItemToCart} />
         ))}
       </div>
       <Cart shoppingCart={shoppingCart} />
