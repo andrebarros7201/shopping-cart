@@ -1,0 +1,13 @@
+.shop{
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.shop-item{
+    width: min(500px, 300px);
+    height: min(500px, 300px);
+}
+
+.shop-item > p{
+    text-overflow: ellipsis;
+}

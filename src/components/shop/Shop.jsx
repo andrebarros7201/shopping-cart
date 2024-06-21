@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import "../../styles/shop.css";
 
 function ShopItem({ item }) {
   return (
     <div className="shop-item">
       <h2>{item.title}</h2>
-      <p>Price: {item.price}</p>
-      <p>{item.description}</p>
+      <p>Price: {item.price}€</p>
       <p>{item.category}</p>
     </div>
   );
