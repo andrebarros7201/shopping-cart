@@ -8,8 +8,11 @@ function Cart({ shoppingCart, totalCart }) {
       ) : (
         <>
           <h2>
-            {shoppingCart.length}
-            {shoppingCart.length === 1 ? " Item" : " Items"} in the cart
+            {shoppingCart.reduce((acc, item) => acc + item.quantity, 0)}
+            {shoppingCart.reduce((acc, item) => acc + item.quantity, 0) === 1
+              ? " Item"
+              : " Items"}{" "}
+            in the cart
           </h2>
           <h1>Total: {totalCart}€</h1>
           {shoppingCart.map((item) => (
