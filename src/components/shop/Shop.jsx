@@ -12,9 +12,10 @@ function Shop() {
   const [categories, setCategories] = useState([]);
   const [shoppingCart, setShoppingCart] = useState([]);
 
-  const totalCart = shoppingCart.reduce(
-    (acc, item) => acc + item.quantity * item.price,
-    0,
+  const totalCart = parseFloat(
+    shoppingCart
+      .reduce((acc, item) => acc + item.quantity * item.price, 0)
+      .toFixed(2),
   );
 
   useEffect(() => {
@@ -37,7 +38,7 @@ function Shop() {
     if (shoppingCart.filter((x) => x.name === item.title).length === 0) {
       setShoppingCart((prev) => [
         ...prev,
-        { name: item.title, price: item.price, quantity: quantity },
+        { name: item.title, price: item.price, quantity: Number(quantity) },
       ]);
     } else {
       const itemIndex = shoppingCart.findIndex((x) => x.name === item.title);
