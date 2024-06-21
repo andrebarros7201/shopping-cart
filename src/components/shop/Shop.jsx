@@ -53,8 +53,7 @@ function Shop() {
   };
 
   const handleRemove = (item) => {
-    const updatedCart = shoppingCart.filter((x) => x.name !== item.name);
-    setShoppingCart(updatedCart);
+    setShoppingCart(shoppingCart.filter((x) => x.name !== item.name));
   };
 
   if (loading) return <h1>Loading...</h1>;

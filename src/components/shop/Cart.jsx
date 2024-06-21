@@ -26,10 +26,7 @@ function Cart({ shoppingCart, totalCart, handleRemove }) {
                 <h4>{item.name}</h4>
                 <p>Price: {item.price}€</p>
                 <p>Quantity: {item.quantity}</p>
-                <button
-                  className="remove"
-                  onClick={(item) => handleRemove(item)}
-                >
+                <button className="remove" onClick={() => handleRemove(item)}>
                   Remove
                 </button>
               </div>
