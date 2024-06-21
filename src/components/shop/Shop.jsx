@@ -38,7 +38,7 @@ function Shop() {
           <ShopItem key={item.id} item={item} />
         ))}
       </div>
-      <Cart />
+      <Cart shoppingCart={shoppingCart} />
     </div>
   );
 }
