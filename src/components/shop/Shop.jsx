@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "../../styles/shop.css";
-import ShopSidebar from "./ShopSidebar.jsx";
 import Cart from "./Cart.jsx";
 import ShopItem from "./ShopItem.jsx";
 
@@ -38,7 +37,12 @@ function Shop() {
     if (shoppingCart.filter((x) => x.name === item.title).length === 0) {
       setShoppingCart((prev) => [
         ...prev,
-        { name: item.title, price: item.price, quantity: Number(quantity) },
+        {
+          name: item.title,
+          price: item.price,
+          quantity: Number(quantity),
+          image: item.image,
+        },
       ]);
     } else {
       const itemIndex = shoppingCart.findIndex((x) => x.name === item.title);
@@ -48,17 +52,36 @@ function Shop() {
     }
   };
 
+  const handleRemove = (item) => {
+    const updatedCart = shoppingCart.filter((x) => x.name !== item.name);
+    setShoppingCart(updatedCart);
+  };
+
   if (loading) return <h1>Loading...</h1>;
   if (error) return <h1>Something went wrong...</h1>;
   return (
     <div className="shop">
-      <ShopSidebar categories={categories} />
-      <div className="shop-main">
-        {data.map((item) => (
-          <ShopItem key={item.id} item={item} addItemToCart={addItemToCart} />
-        ))}
-      </div>
-      <Cart shoppingCart={shoppingCart} totalCart={totalCart} />
+      <main>
+        <div className="categories">
+          <ul>
+            {categories.map((category) => (
+              <li key={category}>
+                <button>{String(category).toUpperCase()}</button>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="shop-main">
+          {data.map((item) => (
+            <ShopItem key={item.id} item={item} addItemToCart={addItemToCart} />
+          ))}
+        </div>
+      </main>
+      <Cart
+        shoppingCart={shoppingCart}
+        totalCart={totalCart}
+        handleRemove={handleRemove}
+      />
     </div>
   );
 }
