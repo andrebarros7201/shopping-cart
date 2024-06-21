@@ -12,6 +12,11 @@ function Shop() {
   const [categories, setCategories] = useState([]);
   const [shoppingCart, setShoppingCart] = useState([]);
 
+  const totalCart = shoppingCart.reduce(
+    (acc, item) => acc + item.quantity * item.price,
+    0,
+  );
+
   useEffect(() => {
     fetch("https://fakestoreapi.com/products/categories")
       .then((res) => res.json())
@@ -29,10 +34,17 @@ function Shop() {
   }, []);
 
   const addItemToCart = (item, quantity) => {
-    setShoppingCart((prev) => [
-      ...prev,
-      { name: item.title, price: item.price, quantity: quantity },
-    ]);
+    if (shoppingCart.filter((x) => x.name === item.title).length === 0) {
+      setShoppingCart((prev) => [
+        ...prev,
+        { name: item.title, price: item.price, quantity: quantity },
+      ]);
+    } else {
+      const itemIndex = shoppingCart.findIndex((x) => x.name === item.title);
+      const updatedCart = [...shoppingCart];
+      updatedCart[itemIndex].quantity += Number(quantity);
+      setShoppingCart(updatedCart);
+    }
   };
 
   if (loading) return <h1>Loading...</h1>;
@@ -45,7 +57,7 @@ function Shop() {
           <ShopItem key={item.id} item={item} addItemToCart={addItemToCart} />
         ))}
       </div>
-      <Cart shoppingCart={shoppingCart} />
+      <Cart shoppingCart={shoppingCart} totalCart={totalCart} />
     </div>
   );
 }
